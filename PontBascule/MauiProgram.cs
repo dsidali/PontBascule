@@ -1,5 +1,9 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using PontBascule.Data;
+using PontBascule.Model;
+using PontBascule.Model.DataAccess;
 
 namespace PontBascule;
 
@@ -22,8 +26,15 @@ public static class MauiProgram
 		builder.Logging.AddDebug();
 #endif
 
-		builder.Services.AddSingleton<WeatherForecastService>();
+		var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
+		builder.Services.AddDbContextFactory<ApplicationDbContext>(
+			(DbContextOptionsBuilder options) => options.UseSqlServer(connectionString));
+
+
+
+		builder.Services.AddSingleton<WeatherForecastService>();
+        builder.Services.AddScoped<IAchatCrud, AchatCrud>();
 		return builder.Build();
 	}
 }

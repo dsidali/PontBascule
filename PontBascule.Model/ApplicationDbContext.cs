@@ -16,7 +16,7 @@ namespace PontBascule.Model
         {
         }
 
-        /*
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             IConfiguration configuration = new ConfigurationBuilder()
@@ -27,7 +27,7 @@ namespace PontBascule.Model
 
         }
 
-        */
+        
 
 
         public DbSet<Parc> Parcs { get; set; }

@@ -1,0 +1,59 @@
+﻿@page "/achats/index"
+
+@using PontBascule.Model.Models
+@using PontBascule.Model.DataAccess
+@using System.Runtime.InteropServices.JavaScript
+@inject IAchatCrud AchatCrud
+<h3>Index</h3>
+
+
+@try
+{
+<table class="table">
+    <thead>
+    <tr>
+        <th>JSType.Date</th>
+        <th>Temp. (C)</th>
+        <th>Temp. (F)</th>
+        <th>Summary</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var forecast in achatsList)
+    {
+        <tr>
+            <td>@forecast.Id</td>
+            <td>@forecast.Mat</td>
+            <td>@forecast.NumBonA</td>
+            <td>@forecast.NumTicket</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+}catch  (Exception e)
+{
+    erreur = "erreur: " + e.Message;
+}
+
+
+<p>@erreur</p>
+
+
+
+@code {
+    private List<Achat> achatsList;
+    private string erreur;
+    protected override async Task OnInitializedAsync()
+    {
+
+        try
+        {
+            achatsList = await AchatCrud.GetAchatsList();
+        }
+        catch (Exception e)
+        {
+            erreur = "erreur: " + e.Message;
+        }
+    }
+}
