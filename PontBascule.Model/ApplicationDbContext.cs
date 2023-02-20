@@ -15,7 +15,7 @@ namespace PontBascule.Model
             : base(options)
         {
         }
-
+        /*
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -26,7 +26,7 @@ namespace PontBascule.Model
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
 
         }
-
+        */
         
 
 

@@ -13,10 +13,11 @@ namespace PontBascule.Model.DataAccess
     public  class AchatCrud : IAchatCrud
     {
         private ApplicationDbContext db;
-
-        public AchatCrud(ApplicationDbContext _db)
+        private IDbContextFactory<ApplicationDbContext> _dbContextFactory;
+        public AchatCrud(IDbContextFactory<ApplicationDbContext> dbContextFactory)
         {
-            db = _db;
+           _dbContextFactory = dbContextFactory;
+           db = _dbContextFactory.CreateDbContext();
         }
 
         public  Achat CreateAchatEntity(string NumBonA, int ParcId, string Mat, string Transporteur, DateTime DateOP, TimeSpan HeureOP, string NumTicket, int PCC, int PCV, int PB, int PQRa, int PQS, bool Termine, string Observation,string FournisseurOuClient,string TypeTransport,string TypeCamion)
