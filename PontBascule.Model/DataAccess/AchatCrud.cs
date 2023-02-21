@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using PontBascule.Model;
 using PontBascule.Model.Models;
 
@@ -47,6 +48,9 @@ namespace PontBascule.Model.DataAccess
 
         public  async Task<Achat> CreateAchat(Achat achat)
         {
+          
+
+
 
             var _achat = db.Achats.Add(achat);
             await db.SaveChangesAsync();
@@ -56,6 +60,7 @@ namespace PontBascule.Model.DataAccess
 
         public  async Task<List<Achat>> GetAchatsList()
         {
+
             return await db.Achats.ToListAsync();
         }
 

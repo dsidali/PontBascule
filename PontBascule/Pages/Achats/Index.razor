@@ -3,7 +3,8 @@
 @using PontBascule.Model.Models
 @using PontBascule.Model.DataAccess
 @using System.Runtime.InteropServices.JavaScript
-@inject AchatCrud AchatCrud
+@using PontBascule.Data
+@inject AchatService AchatCrud
 <h3>Index</h3>
 
 
@@ -49,7 +50,7 @@
 
         try
         {
-            achatsList = await AchatCrud.GetAchatsList();
+            achatsList =  AchatCrud.GetAchats();
         }
         catch (Exception e)
         {
