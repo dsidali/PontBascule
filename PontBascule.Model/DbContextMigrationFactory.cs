@@ -17,8 +17,10 @@ namespace PontBascule.Model
                     .SetBasePath(Directory.GetCurrentDirectory())
                     .AddJsonFile("appsettings.json")
                     .Build();
+            var connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
             var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            builder.UseSqlServer(configuration.GetConnectionString("data source=127.0.0.1;initial catalog=PontBasculeDB2;user id=sa;password=Informatik.1;Trust Server Certificate=true;MultipleActiveResultSets=True;"));
+            builder.UseSqlServer(configuration.GetConnectionString(connectionString));
 
             return new ApplicationDbContext(builder.Options);
         }

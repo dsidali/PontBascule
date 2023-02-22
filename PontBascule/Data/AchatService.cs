@@ -12,16 +12,18 @@ namespace PontBascule.Data
     public class AchatService
     {
         private IDbContextFactory<ApplicationDbContext> _dbContextFactory;
+        private ApplicationDbContext db;
 
         public AchatService(IDbContextFactory<ApplicationDbContext> dbContextFactory)
         {
             _dbContextFactory = dbContextFactory;
+            db = _dbContextFactory.CreateDbContext();
         }
 
 
         public List<Achat> GetAchats()
         {
-          var db =   _dbContextFactory.CreateDbContext();
+       
           return db.Achats.ToList();
         }
     }
