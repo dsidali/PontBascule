@@ -4,29 +4,44 @@
 @using PontBascule.Model.DataAccess
 @using System.Runtime.InteropServices.JavaScript
 @using PontBascule.Data
-@inject AchatService AchatCrud
-<h3>Index</h3>
 
+@inject AchatService AchatCrud
+<h3>Achats</h3>
+<br/>
+
+<button class="btn btn-primary" @onclick="() => Create()">Nouvelle opération</button>
+
+<br />
 
 @try
 {
-<table class="table">
+<table class="table" style="margin-top: 1%">
     <thead>
     <tr>
-        <th>JSType.Date</th>
-        <th>Temp. (C)</th>
-        <th>Temp. (F)</th>
-        <th>Summary</th>
+        <th>Num Bon</th>
+        <th>Num Ticket</th>
+        <th>Transporteur</th>
+        <th>Matricule</th>
+        <th>Date Operation</th>
+        <th>Heure Operation</th>
+       <th></th>   
     </tr>
     </thead>
     <tbody>
-    @foreach (var forecast in achatsList)
+    @foreach (var achat in achatsList)
     {
         <tr>
-            <td>@forecast.Id</td>
-            <td>@forecast.Mat</td>
-            <td>@forecast.NumBonA</td>
-            <td>@forecast.NumTicket</td>
+        
+            <td>@achat.NumBonA</td>
+            <td>@achat.NumTicket</td>
+            <td>@achat.Transporteur</td>
+            <td>@achat.Mat</td>
+            <td>@achat.DateOP.ToShortDateString()</td>
+            <td>@achat.HeureOP</td>
+            <td>     
+                <button class="btn btn-primary" @onclick="() => Edit(achat)">Modifier</button>
+                @*<button class="btn btn-danger" @onclick="() => DeleteBook(book.Id)">Delete</button>*@
+            </td>
         </tr>
     }
     </tbody>
@@ -57,4 +72,15 @@
             erreur = "erreur: " + e.Message;
         }
     }
+
+
+    void Edit(Achat Achat)
+    {
+
+    }
+
+    void Create()
+    {
+    NavigationManager.NavigateTo("/achats/create");
+    } 
 }
