@@ -9,12 +9,12 @@ using PontBascule.Model.Models;
 
 namespace PontBascule.Data
 {
-    public class AchatService
+    public class AchatsService
     {
         private IDbContextFactory<ApplicationDbContext> _dbContextFactory;
         private ApplicationDbContext db;
 
-        public AchatService(IDbContextFactory<ApplicationDbContext> dbContextFactory)
+        public AchatsService(IDbContextFactory<ApplicationDbContext> dbContextFactory)
         {
             _dbContextFactory = dbContextFactory;
             db = _dbContextFactory.CreateDbContext();

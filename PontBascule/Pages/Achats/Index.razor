@@ -5,7 +5,7 @@
 @using System.Runtime.InteropServices.JavaScript
 @using PontBascule.Data
 
-@inject AchatService AchatCrud
+@inject AchatsService AchatsCrud
 <h3>Achats</h3>
 <br/>
 
@@ -65,7 +65,7 @@
 
         try
         {
-            achatsList =  AchatCrud.GetAchats();
+            achatsList =  AchatsCrud.GetAchats();
         }
         catch (Exception e)
         {
