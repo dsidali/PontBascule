@@ -80,15 +80,4 @@
       <ProjectReference Include="..\PontBascule.Model\PontBascule.Model.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Data\Achats\" />
-      <Folder Include="Data\Config\" />
-      <Folder Include="Data\Stock\" />
-      <Folder Include="Data\SortieTransfert\" />
-      <Folder Include="Data\SortieRondBeton\" />
-      <Folder Include="Data\ReceptionTransfert\" />
-      <Folder Include="Data\ReceptionRondBeton\" />
-      <Folder Include="Data\Pesage\" />
-    </ItemGroup>
-
 </Project>
