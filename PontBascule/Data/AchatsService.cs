@@ -62,7 +62,7 @@ namespace PontBascule.Data
 
 
             var _achat = db.Achats.Add(achat);
-            await db.SaveChangesAsync();
+            await Task.FromResult(db.SaveChangesAsync());
             return _achat.Entity;
         }
 
@@ -83,25 +83,27 @@ namespace PontBascule.Data
 
         public async Task<Achat> GetAchatById(int id)
         {
-            return await db.Achats.FindAsync(id);
+            var achat = await Task.FromResult(db.Achats.FindAsync(id));
+            return achat.Result;
         }
 
         public async Task<Achat> GetAchatByNumBon(string NumBonA)
         {
-            return await db.Achats.FirstOrDefaultAsync(x => x.NumBonA == NumBonA);
+            var achat = await Task.FromResult(db.Achats.FirstOrDefaultAsync(x => x.NumBonA == NumBonA));
+            return achat.Result;
         }
 
 
         public async Task EditAchat(Achat achat)
         {
             db.Entry(achat).State = EntityState.Modified;
-            await db.SaveChangesAsync();
+            await Task.FromResult(db.SaveChangesAsync());
         }
 
         public async Task DeleteAchat(Achat achat)
         {
             db.Achats.Remove(achat);
-            await db.SaveChangesAsync();
+            await Task.FromResult(db.SaveChangesAsync());
         }
 
         public string GetMax()

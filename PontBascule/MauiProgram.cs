@@ -60,6 +60,7 @@ public static class MauiProgram
 		builder.Services.AddSingleton<WeatherForecastService>();
 		//builder.Services.AddScoped<IAchatCrud, AchatCrud>();
 		builder.Services.AddTransient<AchatsService>();
+		builder.Services.AddTransient<BusinessLayer>();
 		return builder.Build();
 	}
 }
