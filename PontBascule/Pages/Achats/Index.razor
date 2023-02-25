@@ -41,6 +41,8 @@
             <td>     
                 <button class="btn btn-primary" @onclick="() => Edit(achat)">Modifier</button>
                 @*<button class="btn btn-danger" @onclick="() => DeleteBook(book.Id)">Delete</button>*@
+                
+                @*<a class="btn btn-secondary btn-sm" href="/achats/edit/@achat.Id" role="button">Edit</a>*@
             </td>
         </tr>
     }
@@ -76,7 +78,11 @@
 
     void Edit(Achat Achat)
     {
+        NavigationManager.NavigateTo($"/achats/edit/{Achat.Id}");
 
+
+        //NavigationManager.NavigateTo(
+        //    NavigationManager.GetUriWithQueryParameter("/achats/edit", Achat.Id));
     }
 
     void Create()
