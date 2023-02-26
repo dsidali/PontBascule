@@ -1,7 +1,6 @@
 ﻿@page "/achats/edit/{id:int}"
 
-@inject AchatsService AchatsService
-@inject BusinessLayer BusinessLayer
+
 
 @using PontBascule.Data
 @using PontBascule.Model.Models
@@ -10,6 +9,88 @@
 
 <p>@id</p>
 
+
+
+<EditForm class="row g-3" Model="achat" OnValidSubmit="@EditAchat" style="margin-top: 1%">
+    <div class="col-md-6">
+        <label class="form-label">Chauffeur</label>
+
+        <InputText @bind-Value="achat.Transporteur" class="form-control"></InputText>
+    </div>
+
+    <div class="col-md-6">
+
+        <label for="inputState" class="form-label">Type transport</label>
+
+
+
+        <InputSelect @bind-Value="achat.TypeTransport" class="form-select">
+            <option value="">Select classification ...</option>
+            <option value="Tosyali">Tosyali</option>
+            <option value="Safhadid">Safhadid</option>
+            <option value="Privé">Privé</option>
+        </InputSelect>
+
+
+    </div>
+
+    <div class="col-md-6">
+
+        <label for="inputState" class="form-label">Type camion</label>
+        <InputSelect @bind-Value="achat.TypeCamion" class="form-select">
+            <option value="">Select classification ...</option>
+            <option value="A grappin">A grappin</option>
+            <option value="A benne">A benne</option>
+            <option value="Autre">Autre</option>
+        </InputSelect>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Matricule camion</label>
+        <InputText @bind-Value="achat.Mat" class="form-control"></InputText>
+    </div>
+
+    <div class="col-md-6">
+        <label class="form-label">Date</label>
+        <InputDate class="form-control" @bind-Value="achat.DateOP"></InputDate>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Heure</label>
+        <input type="time" class="form-control" id="inputTime" @bind="ts" step="1" />
+
+    </div>
+
+    <div class="col-md-6">
+        <label class="form-label">Numero ticket</label>
+        <InputText @bind-Value="achat.NumTicket" class="form-control"></InputText>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Fournisseur / Client</label>
+        <InputText @bind-Value="achat.FournisseurOuClient" class="form-control"></InputText>
+    </div>
+
+
+
+
+    <div class="col-md-6">
+        <label class="form-label">Poids à charge</label>
+        <InputNumber @bind-Value="Poids" class="form-control"></InputNumber>
+    </div>
+
+    <div class="col-md-6">
+        <label class="form-label">Observation</label>
+        <InputText @bind-Value="achat.Observation" class="form-control"></InputText>
+    </div>
+
+    <div class="col-12">
+        <button class="btn btn-secondary" @onclick="Peser">Peser</button>
+        <button type="submit" class="btn btn-primary" style="float: right">Valider</button>
+
+    </div>
+</EditForm>
+
+
+
+
 @code {
     [Parameter]
     public int id { get; set; }
@@ -17,32 +98,33 @@
     private Achat achat { get; set; }
     public int Poids { get; set; }
 
+
+    DateTime ts { get; set; }
     protected override async Task OnInitializedAsync()
     {
 
 
         achat = await AchatsService.GetAchatById(id);
+        ts = achat.DateOP;
     }
 
 
 
-    private async Task AddAchat()
+    private async Task EditAchat()
     {
     //  await _bookService.AddBookAsync(achat);
         achat.NumBonA = AchatsService.GenerateId();
-        achat.HeureOP = new TimeSpan(DateTime.Today.Hour, DateTime.Today.Minute, DateTime.Today.Second);
+     //   achat.HeureOP = new TimeSpan(DateTime.Today.Hour, DateTime.Today.Minute, DateTime.Today.Second);
     //  achat.HeureOP = new TimeSpan(ts.Hour, ts.Minute, ts.Second);
-        achat.TypeCamion = "a benne";
-        achat.TypeTransport = "Tosyali";
-        achat.ParcId = 1;
-        achat.PCC = Poids;
+        achat.HeureOP = new TimeSpan(ts.Hour, ts.Minute, ts.Second);
+
         achat.PB = 0;
         achat.PCV = 0;
         achat.PQRa = 0;
         achat.PQS = 0;
-        achat.Termine = false;
-        achat.Observation = "";
-        await   AchatsService.CreateAchat(achat);
+        achat.Termine = true;
+  
+        await   AchatsService.EditAchat(achat);
         NavigationManager.NavigateTo("/achats/index");
     }
 

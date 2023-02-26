@@ -5,5 +5,20 @@
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 @using Microsoft.JSInterop
 @using PontBascule
+@using PontBascule.Data
+@using PontBascule.Model.DataAccess
 @using PontBascule.Shared
 @inject NavigationManager NavigationManager;
+
+@inject BusinessLayer BusinessLayer
+
+@inject AchatsService AchatsService
+@inject ParcService ParcService
+@inject PesageService PesageService
+@inject ReceptionRondBetonService ReceptionRondBetonService
+@inject ReceptionTransfertService ReceptionTransfertService
+@inject SortieRondBetonService SortieRondBetonService
+@inject SortieTransfertService SortieTransfertService
+@inject TransporteurService TransporteurService
+@inject TypeProduitService TypeProduitService
+

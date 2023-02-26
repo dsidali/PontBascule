@@ -59,8 +59,19 @@ public static class MauiProgram
 
 		builder.Services.AddSingleton<WeatherForecastService>();
 		//builder.Services.AddScoped<IAchatCrud, AchatCrud>();
+        builder.Services.AddTransient<BusinessLayer>();
+
 		builder.Services.AddTransient<AchatsService>();
-		builder.Services.AddTransient<BusinessLayer>();
+		builder.Services.AddTransient<ParcService>();
+		builder.Services.AddTransient<PesageService>();
+		builder.Services.AddTransient<ReceptionRondBetonService>();
+		builder.Services.AddTransient<ReceptionTransfertService>();
+		builder.Services.AddTransient<SortieRondBetonService>();
+		builder.Services.AddTransient<SortieTransfertService>();
+		builder.Services.AddTransient<TransporteurService>();
+		builder.Services.AddTransient<TypeProduitService>();
+
+		
 		return builder.Build();
 	}
 }
