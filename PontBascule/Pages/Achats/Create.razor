@@ -33,27 +33,35 @@
 <EditForm class="row g-3" Model="achat" OnValidSubmit="@AddAchat" style="margin-top: 1%">
     <div class="col-md-6">
         <label  class="form-label">Chauffeur</label>
-        @*<input type="email" class="form-control" id="inputEmail4">*@
+       
         <InputText @bind-Value="achat.Transporteur" class="form-control" ></InputText>
     </div>
 
     <div class="col-md-6">
       
         <label for="inputState" class="form-label">Type transport</label>
-        <select id="inputState" class="form-select">
-            <option selected>Choose...</option>
-            <option>...</option>
-        </select>
+    
+        
+        
+        <InputSelect @bind-Value="achat.TypeTransport" class="form-select">
+            <option value="">Select classification ...</option>
+            <option value="Tosyali">Tosyali</option>
+            <option value="Safhadid">Safhadid</option>
+            <option value="Privé">Privé</option>
+        </InputSelect>
        
         
     </div>
 
     <div class="col-md-6">
+
         <label for="inputState" class="form-label">Type camion</label>
-        <select id="inputState" class="form-select">
-            <option selected>Choose...</option>
-            <option>...</option>
-        </select>
+        <InputSelect @bind-Value="achat.TypeCamion" class="form-select">
+            <option value="" >Select classification ...</option>
+            <option value="A grappin">A grappin</option>
+            <option value="A benne">A benne</option>
+            <option value="Autre">Autre</option>
+        </InputSelect>
     </div>
     <div class="col-md-6">
         <label  class="form-label">Matricule camion</label>
@@ -66,7 +74,7 @@
     </div>
     <div class="col-md-6">
         <label  class="form-label">Heure</label>
-        <input type="time" class="form-control" id="inputPassword4" @bind="ts">
+        <input type="time" class="form-control" id="inputTime" @bind="ts" step="1"/>
         
     </div>
     
@@ -82,13 +90,15 @@
     
     <div class="col-md-6">
         <label  class="form-label">Observation</label>
-        <InputNumber @bind-Value="achat.Observation" class="form-control" ></InputNumber>
+        <InputText @bind-Value="achat.Observation" class="form-control" ></InputText>
     </div>
    
     <div class="col-md-6">
         <label  class="form-label">Poids à charge</label>
         <InputNumber @bind-Value="Poids" class="form-control" ></InputNumber>
     </div>
+    
+
 
     <div class="col-12">
         <button type="submit" class="btn btn-primary">Valider</button>
@@ -101,12 +111,23 @@
 
     public int Poids { get; set; }
     DateTime ts { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+     achat.DateOP = DateTime.Today;
+        ts = DateTime.Now;
+    }
+
+
+
     private async Task AddAchat()
     {
       //  await _bookService.AddBookAsync(achat);
         achat.NumBonA = AchatsService.GenerateId();
-        achat.HeureOP = new TimeSpan(DateTime.Today.Hour, DateTime.Today.Minute, DateTime.Today.Second);
-      //  achat.HeureOP = new TimeSpan(ts.Hour, ts.Minute, ts.Second);
+     //   achat.HeureOP = new TimeSpan(DateTime.Today.Hour, DateTime.Today.Minute, DateTime.Today.Second);
+      achat.HeureOP = new TimeSpan(ts.Hour, ts.Minute, ts.Second);
         achat.TypeCamion = "a benne";
         achat.TypeTransport = "Tosyali";
         achat.ParcId = 1;
@@ -136,6 +157,3 @@
 }
 
 
-@code {
-
-}
