@@ -57,9 +57,19 @@
       <None Include="appsettings.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Include="wwwroot\Reporting\BonAccesReceptionAchat.rdlc" />
+      <None Include="wwwroot\Reporting\BonAccessPesageLibre.rdlc" />
+      <None Include="wwwroot\Reporting\BonAccessReceptionRondBeton.rdlc" />
+      <None Include="wwwroot\Reporting\BonAccessSortieRondBeton.rdlc" />
+      <None Include="wwwroot\Reporting\ReportPesageLibre.rdlc" />
+      <None Include="wwwroot\Reporting\ReportReceptionAchat.rdlc" />
+      <None Include="wwwroot\Reporting\ReportReceptionRondBeton.rdlc" />
+      <None Include="wwwroot\Reporting\ReportSortieRondBeton.rdlc" />
+      <None Include="wwwroot\Reporting\ReportTransfert.rdlc" />
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="AspNetCore.Reporting" Version="2.1.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.3" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="7.0.3" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.3">
