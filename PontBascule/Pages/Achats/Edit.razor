@@ -4,9 +4,9 @@
 
 
 
-<h3>Edit</h3>
+<h3>Edition</h3>
 
-<p>@id</p>
+
 
 
 
@@ -14,7 +14,7 @@
     <div class="col-md-6">
         <label class="form-label">Chauffeur</label>
 
-        <InputText @bind-Value="achat.Transporteur" class="form-control"></InputText>
+        <InputText @bind-Value="achat.Transporteur" class="form-control" disabled></InputText>
     </div>
 
     <div class="col-md-6">
@@ -23,7 +23,7 @@
 
 
 
-        <InputSelect @bind-Value="achat.TypeTransport" class="form-select">
+        <InputSelect @bind-Value="achat.TypeTransport" class="form-select" disabled>
             <option value="">Select classification ...</option>
             <option value="Tosyali">Tosyali</option>
             <option value="Safhadid">Safhadid</option>
@@ -36,7 +36,7 @@
     <div class="col-md-6">
 
         <label for="inputState" class="form-label">Type camion</label>
-        <InputSelect @bind-Value="achat.TypeCamion" class="form-select">
+        <InputSelect @bind-Value="achat.TypeCamion" class="form-select" disabled>
             <option value="">Select classification ...</option>
             <option value="A grappin">A grappin</option>
             <option value="A benne">A benne</option>
@@ -45,35 +45,59 @@
     </div>
     <div class="col-md-6">
         <label class="form-label">Matricule camion</label>
-        <InputText @bind-Value="achat.Mat" class="form-control"></InputText>
+        <InputText @bind-Value="achat.Mat" class="form-control" disabled></InputText>
     </div>
 
     <div class="col-md-6">
         <label class="form-label">Date</label>
-        <InputDate class="form-control" @bind-Value="achat.DateOP"></InputDate>
+        <InputDate class="form-control" @bind-Value="achat.DateOP" disabled></InputDate>
     </div>
     <div class="col-md-6">
         <label class="form-label">Heure</label>
-        <input type="time" class="form-control" id="inputTime" @bind="ts" step="1" />
+        <input type="time" class="form-control" id="inputTime" @bind="ts" step="1" disabled />
 
     </div>
 
     <div class="col-md-6">
         <label class="form-label">Numero ticket</label>
-        <InputText @bind-Value="achat.NumTicket" class="form-control"></InputText>
+        <InputText @bind-Value="achat.NumTicket" class="form-control" disabled></InputText>
     </div>
     <div class="col-md-6">
         <label class="form-label">Fournisseur / Client</label>
-        <InputText @bind-Value="achat.FournisseurOuClient" class="form-control"></InputText>
+        <InputText @bind-Value="achat.FournisseurOuClient" class="form-control" disabled></InputText>
     </div>
 
+
+
+
+    <div class="col-md-3">
+        <label class="form-label">Poids brut</label>
+        <InputNumber @bind-Value="achat.PCC" class="form-control" disabled></InputNumber>
+    </div>
+
+
+    <div class="col-md-3">
+        <label class="form-label">Tare</label>
+        <InputNumber @bind-Value="achat.PCV" class="form-control"></InputNumber>
+    </div>
+
+    <div class="col-md-3">
+        <label class="form-label">Poids net</label>
+        <InputNumber @bind-Value="achat.PB" class="form-control"></InputNumber>
+    </div>
+
+    <div class="col-md-3">
+        <label class="form-label">Quantité rabais</label>
+        <InputNumber @bind-Value="achat.PQRa" class="form-control" ></InputNumber>
+    </div>
 
 
 
     <div class="col-md-6">
-        <label class="form-label">Poids à charge</label>
-        <InputNumber @bind-Value="Poids" class="form-control"></InputNumber>
+        <label class="form-label">Poids net final</label>
+        <InputNumber @bind-Value="achat.PQS" class="form-control" ></InputNumber>
     </div>
+
 
     <div class="col-md-6">
         <label class="form-label">Observation</label>
@@ -81,14 +105,14 @@
     </div>
 
     <div class="col-12">
-        <button class="btn btn-secondary" @onclick="Peser">Peser</button>
+      
         <button type="submit" class="btn btn-primary" style="float: right">Valider</button>
 
     </div>
 </EditForm>
+<button class="btn btn-secondary" @onclick="Peser">Peser</button>
 
-
-
+<button class="btn btn-secondary" @onclick="calcul">Calcul</button>
 
 @code {
     [Parameter]
@@ -111,18 +135,18 @@
 
     private async Task EditAchat()
     {
-    //  await _bookService.AddBookAsync(achat);
-        achat.NumBonA = AchatsService.GenerateId();
-     //   achat.HeureOP = new TimeSpan(DateTime.Today.Hour, DateTime.Today.Minute, DateTime.Today.Second);
-    //  achat.HeureOP = new TimeSpan(ts.Hour, ts.Minute, ts.Second);
-        achat.HeureOP = new TimeSpan(ts.Hour, ts.Minute, ts.Second);
+        //  await _bookService.AddBookAsync(achat);
+        //   achat.NumBonA = AchatsService.GenerateId();
+        //   achat.HeureOP = new TimeSpan(DateTime.Today.Hour, DateTime.Today.Minute, DateTime.Today.Second);
+        //  achat.HeureOP = new TimeSpan(ts.Hour, ts.Minute, ts.Second);
+        //  achat.HeureOP = new TimeSpan(ts.Hour, ts.Minute, ts.Second);
 
-        achat.PB = 0;
+        /*  achat.PB = 0;
         achat.PCV = 0;
         achat.PQRa = 0;
-        achat.PQS = 0;
+        achat.PQS = 0;*/
         achat.Termine = true;
-  
+
         await   AchatsService.EditAchat(achat);
         NavigationManager.NavigateTo("/achats/index");
     }
@@ -135,6 +159,16 @@
 
     private void Peser()
     {
-        Poids = BusinessLayer.Peser();
+        string portname = configuration["SerialPort:PorName"];
+        var delay = configuration["SerialPort:Delay"];
+
+        Thread.Sleep(Convert.ToInt32(delay));
+        achat.PCV = Operation.Peser(portname);
+        achat.PB = achat.PCC - achat.PCV;
+    }
+
+    void calcul()
+    {
+        achat.PQS = achat.PB - achat.PQRa;
     }
 }

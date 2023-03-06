@@ -8,6 +8,7 @@ using PontBascule.Model;
 using PontBascule.Model.DataAccess;
 using Microsoft.VisualBasic;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using PontBascule.Business;
 
 namespace PontBascule;
 
@@ -70,7 +71,7 @@ public static class MauiProgram
 		builder.Services.AddTransient<SortieTransfertService>();
 		builder.Services.AddTransient<TransporteurService>();
 		builder.Services.AddTransient<TypeProduitService>();
-
+		builder.Services.AddTransient<BusinessOperation>();
 		
 		return builder.Build();
 	}

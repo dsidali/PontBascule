@@ -3,8 +3,10 @@
 @using Microsoft.AspNetCore.Components.Routing
 @using Microsoft.AspNetCore.Components.Web
 @using Microsoft.AspNetCore.Components.Web.Virtualization
+@using Microsoft.Extensions.Configuration;
 @using Microsoft.JSInterop
 @using PontBascule
+@using PontBascule.Business;
 @using PontBascule.Data
 @using PontBascule.Model.DataAccess
 @using PontBascule.Shared
@@ -23,4 +25,7 @@
 @inject SortieTransfertService SortieTransfertService
 @inject TransporteurService TransporteurService
 @inject TypeProduitService TypeProduitService
+@inject BusinessOperation Operation
 
+
+@inject IConfiguration configuration;

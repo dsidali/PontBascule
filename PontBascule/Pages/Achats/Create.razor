@@ -87,9 +87,14 @@
 
    
     <div class="col-md-6">
-        <label  class="form-label">Poids à charge</label>
+        <label  class="form-label">Poids brut</label>
         <InputNumber @bind-Value="Poids" class="form-control" ></InputNumber>
     </div>
+
+
+
+
+
     
     <div class="col-md-6">
         <label class="form-label">Observation</label>
@@ -97,12 +102,12 @@
     </div>
 
     <div class="col-12">
-        <button class="btn btn-secondary" @onclick="Peser">Peser</button>
+       
         <button type="submit" class="btn btn-primary" style="float: right">Valider</button>
       
     </div>
 </EditForm>
-
+<button class="btn btn-secondary" @onclick="Peser">Peser</button>
 @code {
     private Achat achat { get; set; } = new Achat();
 
@@ -113,7 +118,7 @@
     protected override async Task OnInitializedAsync()
     {
 
-     achat.DateOP = DateTime.Today;
+        achat.DateOP = DateTime.Today;
         ts = DateTime.Now;
     }
 
@@ -121,10 +126,10 @@
 
     private async Task AddAchat()
     {
-      //  await _bookService.AddBookAsync(achat);
+        //  await _bookService.AddBookAsync(achat);
         achat.NumBonA = AchatsService.GenerateId();
-     //   achat.HeureOP = new TimeSpan(DateTime.Today.Hour, DateTime.Today.Minute, DateTime.Today.Second);
-      achat.HeureOP = new TimeSpan(ts.Hour, ts.Minute, ts.Second);
+        //   achat.HeureOP = new TimeSpan(DateTime.Today.Hour, DateTime.Today.Minute, DateTime.Today.Second);
+        achat.HeureOP = new TimeSpan(ts.Hour, ts.Minute, ts.Second);
 
         achat.ParcId = 1;
         achat.PCC = Poids;
@@ -134,7 +139,7 @@
         achat.PQS = 0;
         achat.Termine = false;
 
-      await   AchatsService.CreateAchat(achat);
+        await   AchatsService.CreateAchat(achat);
         NavigationManager.NavigateTo("/achats/index");
     }
 
@@ -146,7 +151,12 @@
 
     private void Peser()
     {
-        Poids = BusinessLayer.Peser();
+        string portname = configuration["SerialPort:PorName"];
+        var delay = configuration["SerialPort:Delay"];
+
+        Thread.Sleep(Convert.ToInt32(delay));
+        
+        Poids = Operation.Peser(portname);
     }
     
 
